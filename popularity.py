@@ -2,10 +2,18 @@ import urllib2
 import json
 import time
 import os
+from optparse import OptionParser
+
+parser = OptionParser()
+parser.add_option("-c", "--config", dest="config",
+                  help="load configuration from FILE", metavar="FILE")
+(options, args) = parser.parse_args()
+
+if len(args) != 1:
+    parser.error("Config file needed")
 
 # Read in config info
-configFileName = 'config.json'
-configFile = open(configFileName)
+configFile = open(args[0])
 config = json.load(configFile)
 
 
