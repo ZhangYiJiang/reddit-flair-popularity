@@ -1,0 +1,20 @@
+{
+	"rawDataFile": "data.json", 
+	"collatedDataFile": "result.json",
+
+	"baseUrl": "http://www.reddit.com/",
+	"urlPostfix": ".json",
+
+	"flairProp": "author_flair_css_class",
+	"nonePlaceholder": "none",
+
+	"postLimit": 100,
+	"pages": 4,
+
+	"errorTimeout": 30, 
+	"itemTimeout": 2, 
+	"refreshTimeout": 7200,
+
+	"subreddit": "Your subreddit here", 
+	"userAgent": "Custom user agent and your user name"
+}
