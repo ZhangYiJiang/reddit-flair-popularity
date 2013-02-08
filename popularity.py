@@ -137,26 +137,23 @@ else:
 
 recurse = 0
 
-while True:
-    print ('Script Begin ',
-        time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()))
+print ('Script Begin ',
+    time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()))
 
-    try:
-        scrapeItems()
+try:
+    scrapeItems()
 
-        collated = collateData(data)
-        with open(config['collatedDataFile'], 'w+') as fp:
-            result = {
-                'data': collated,
-                'updated': time.time()
-            }
+    collated = collateData(data)
+    with open(config['collatedDataFile'], 'w+') as fp:
+        result = {
+            'data': collated,
+            'updated': time.time()
+        }
 
-            fp.write(json.dumps(result))
+        fp.write(json.dumps(result))
 
-    except Exception as e:
-        print e
+except Exception as e:
+    print e
 
-    print ('Script End ',
-        time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()))
-
-    time.sleep(config['refreshTimeout'])
+print ('Script End ',
+    time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()))
