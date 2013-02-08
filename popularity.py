@@ -62,7 +62,7 @@ def scrapeItems(after=False):
         # Something went terribly wrong there.
         # We still have to keep going through, since we can't miss a page
         time.sleep(config['errorTimeout'])
-        scrapeItems()
+        scrapeItems(after)
     else:
         pageData = json.loads(page)
         items = pageData['data']['children']
