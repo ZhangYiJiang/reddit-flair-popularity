@@ -48,7 +48,7 @@ def loadPage(url):
 
 
 # Initiate scrapping process - get subreddit post list
-def scrapeItems(after=False):
+def scrapeItems(recurse, after=False):
     # This function will recurse to grab the next page
     url = (config['baseUrl'] + config['subreddit'] + config['urlPostfix']
             + '?limit=' + str(config['postLimit']))
@@ -62,7 +62,7 @@ def scrapeItems(after=False):
         # Something went terribly wrong there.
         # We still have to keep going through, since we can't miss a page
         time.sleep(config['errorTimeout'])
-        scrapeItems(after)
+        scrapeItems(recurse, after)
     else:
         pageData = json.loads(page)
         items = pageData['data']['children']
@@ -83,11 +83,8 @@ def scrapeItems(after=False):
                 fp.write(json.dumps(data))
 
         # Fetch the next page if there are more pages
-        global recurse
-        recurse += 1
-
-        if recurse < config['pages']:
-            scrapeItems(pageData['data']['after'])
+        if recurse + 1 < config['pages']:
+            scrapeItems(recurse + 1, pageData['data']['after'])
 
 
 def scrapeItem(url):
@@ -135,13 +132,11 @@ if os.path.exists(config['rawDataFile']):
 else:
     data = {}
 
-recurse = 0
-
 print ('Script Begin ',
     time.strftime("%a, %d %b %Y %H:%M:%S", time.gmtime()))
 
 try:
-    scrapeItems()
+    scrapeItems(0)
 
     collated = collateData(data)
     with open(config['collatedDataFile'], 'w+') as fp:
