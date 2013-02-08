@@ -3,6 +3,7 @@ import json
 import time
 import os
 from optparse import OptionParser
+from collections import Counter
 
 parser = OptionParser()
 parser.add_option("-c", "--config", dest="config",
@@ -120,17 +121,7 @@ def addFlair(username, flair):
 
 
 def collateData(data):
-    collated = {}
-
-    for username in data:
-        flair = data[username]
-
-        if flair in collated:
-            collated[flair] += 1
-        else:
-            collated[flair] = 1
-
-    return collated
+    return Counter(data.itervalues())
 
 
 # Start by importing existing data from the data file
