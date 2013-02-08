@@ -155,7 +155,12 @@ while True:
 
         collated = collateData(data)
         with open(config['collatedDataFile'], 'w+') as fp:
-            fp.write(json.dumps(collated))
+            result = {
+                'data': collated,
+                'updated': time.time()
+            }
+
+            fp.write(json.dumps(result))
 
     except Exception as e:
         print e
